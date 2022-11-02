@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New person</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/admin}" th:object="${user}">
+
+<table >
+
+    <tr>
+        <td><label for="username">Enter name: </label></td>
+        <td><input type="text" th:field="*{username}" id="username"/>
+            <div style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name Error</div>
+        </td>
+
+    </tr>
+    <tr>
+        <td><label for="lastName">Enter Surname: </label></td>
+        <td><input type="text" th:field="*{lastName}" id="lastName"/>
+            <div style="color:red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Name Error</div></td>
+
+    </tr>
+    <tr>
+        <td><label for="age">Enter age: </label></td>
+        <td><input type="text" th:field="*{age}" id="age"/>
+            <div style="color:red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age Error</div>
+        </td>
+
+    </tr>
+    <tr>
+        <td><label for="password">Create password: </label></td>
+        <td><input type="text" th:field="*{password}" id="password"/>
+            <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
+        </td>
+
+    </tr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--    <tr>-->
+<!--        <td><label for="username">Enter name: </label></td>-->
+<!--        <td><input type="text" th:field="*{username}" id="username"/></td>-->
+<!--        <td><div style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name Error</div></td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--        <td><label for="lastName">Enter Surname: </label></td>-->
+<!--        <td><input type="text" th:field="*{lastName}" id="lastName"/></td>-->
+<!--        <td><div style="color:red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Name Error</div></td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--        <td><label for="age">Enter age: </label></td>-->
+<!--        <td><input type="text" th:field="*{age}" id="age"/></td>-->
+<!--        <td><div style="color:red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age Error</div></td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--        <td><label for="password">Create password: </label></td>-->
+<!--        <td><input type="text" th:field="*{password}" id="password"/></td>-->
+<!--        <td><div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div></td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--        <td><label for="roles">Choose Roles: </label></td>-->
+<!--        <td>-->
+<!--            <div th:each="role: ${listRoles}">-->
+<!--                <input type="checkbox" th:field="*{roles}" th:value="${role.id}" th:text="${role.name}" id="roles"/>-->
+<!--            </div>-->
+<!--        </td>-->
+
+<!--        <td><div style="color:red" th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}">Roles Error</div></td>-->
+<!--    </tr>-->
+</table>
+    <div>
+        <label for="roles">Choose Roles: </label>
+            <div th:each="role: ${listRoles}">
+                <input type="checkbox" th:field="*{roles}" th:value="${role.id}" th:text="${role.name}" id="roles" />
+            </div>
+    </div>
+
+
+<!--<form th:method="POST" th:action="@{/admin}" th:object="${user}">-->
+<!--    <label for="username">Enter name: </label>-->
+<!--    <input type="text" th:field="*{username}" id="username"/>-->
+<!--    <div style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name Error</div>-->
+
+<!--    <br/>-->
+
+<!--    <label for="lastName">Enter Surname: </label>-->
+<!--    <input type="text" th:field="*{lastName}" id="lastName"/>-->
+<!--    <div style="color:red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Name Error</div>-->
+<!--    <br/>-->
+
+<!--    <label for="age">Enter age: </label>-->
+<!--    <input type="text" th:field="*{age}" id="age"/>-->
+<!--    <div style="color:red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age Error</div>-->
+<!--    <br/>-->
+
+<!--    <label for="password">Create password: </label>-->
+<!--    <input type="text" th:field="*{password}" id="password"/>-->
+<!--    <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>-->
+<!--    <br/>-->
+
+
+<!--    <ul>-->
+<!--        <label for="roles">Create password: </label>-->
+<!--        <li th:each="role: ${listRoles}">-->
+<!--            <input type="checkbox" th:field="*{roles}" th:value="${role.id}" th:text="${role.name}" id="roles"/>-->
+<!--&lt;!&ndash;            <label th:for="${#ids.prev('roles')}">Heating</label>&ndash;&gt;-->
+<!--&lt;!&ndash;                   th:text="${role.name}">Heating</label>&ndash;&gt;-->
+
+<!--        </li>-->
+<!--    </ul>-->
+
+    <br>
+    <br>
+
+    <input type="submit" value="Create!"/>
+</form>
+<br/>
+<form th:action="@{/logout}" th:method="post">
+    <input type="submit" th:value="Logout"/>
+</form>
+</body>
+</html>
