@@ -14,7 +14,7 @@ import java.util.Set;
 @Entity
 @Component("role")
 @Table(name = "roles")
-public class Role {
+public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -84,5 +84,10 @@ public class Role {
     @Override
     public int hashCode() {
         return name != null ? name.hashCode() : 0;
+    }
+
+    @Override
+    public String getAuthority() {
+        return getName();
     }
 }
