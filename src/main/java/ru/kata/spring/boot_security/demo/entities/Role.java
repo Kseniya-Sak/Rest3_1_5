@@ -21,7 +21,6 @@ public class Role {
 
     @NotNull
     @Size(min = 2, max = 50, message = "Имя должно быть от 2 до 50 символов длиной")
-    @Column(nullable = false, length = 50, unique = true)
     private String name;
 
     @ManyToMany( cascade = {
@@ -32,7 +31,6 @@ public class Role {
     private Set<User> users;
 
     public Role() {
-        System.out.println("Создание Role()");
     }
 
     public Role(String name) {
@@ -43,7 +41,6 @@ public class Role {
         this.name = name;
         this.users = users;
     }
-
 
     public long getId() {
         return id;
@@ -58,7 +55,6 @@ public class Role {
     }
 
     public void setName(String name) {
-        System.out.println("Set name role");
         this.name = name;
     }
 

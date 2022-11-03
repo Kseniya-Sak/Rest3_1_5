@@ -5,9 +5,12 @@
     <title>All users</title>
 </head>
 <body>
-<p>All users</p>
+<h2>All users</h2>
+
     <table>
+
         <tr>
+            <th>Id</th>
             <th>NAME</th>
             <th>LAST NAME</th>
             <th>AGE</th>
@@ -15,6 +18,7 @@
             <th>Roles</th>
         </tr>
             <tr th:each="user : ${users}">
+                <td th:text="${user.getId()}"></td>
                 <td th:text="${user.getUsername()}"></td>
                 <td th:text="${user.getLastName()}"></td>
                 <td th:text="${user.getAge()}"></td>
@@ -36,7 +40,7 @@
 
 <br/>
     <form th:method="GET" th:action="@{/admin/new}">
-        <input type="submit" value="Create new User"/>
+        <input type="submit" value="Create"/>
     </form>
 
     <br/>
@@ -44,4 +48,4 @@
         <input type="submit" th:value="Logout"/>
     </form>
 </body>
-</html>>
+</html>

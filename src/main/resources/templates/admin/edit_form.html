@@ -2,80 +2,132 @@
 <html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-<!--    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>-->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <title>Update person</title>
+    <title>Update user</title>
 </head>
 <body>
+    <h2>Update user</h2>
+    <form th:method="POST" th:action="@{/admin/{id}(id=${user.getId()})}" th:object="${user}">
 
-    <div class="container m-3 text-center">
-        <div class="text-right">
-            <form th:action="@{/logout}" method="post" style="max-width: 600px; margin: 0 auto;">
-                <input type="submit" th:value="Logout"/>
-            </form>
-        </div>
-    <div>
-        <h2>Edit User</h2>
-    </div>
+        <table>
 
-    <form th:action="@{/admin/{id}(id=${user.getId()})}" th:object="${user}"
-          method="post" style="max-width: 600px; margin: 0 auto;">
-        <input type="hidden" th:field="*{id}"/>
-        <div class="m-3">
-            <div class="form-group row">
-                <label class="col-3 col-form-label text-left">Enter Name: </label>
-                <div class="col-8">
-                    <input type="text" th:field="*{username}" class="form-control" required/>
-                </div>
-                <div class="col-sm-3">
-                    <small id="usernameHelp" class="text-danger">
-                        Must be 2-50 characters long.
-                    </small>
-                </div>
-            </div>
+            <tr>
+                <td><label for="username">Enter name: </label></td>
+                <td><input type="text" th:field="*{username}" id="username"/>
+                    <div style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name Error</div>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="lastName">Enter Surname: </label></td>
+                <td><input type="text" th:field="*{lastName}" id="lastName"/>
+                    <div style="color:red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Name Error</div>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="age">Enter age: </label></td>
+                <td><input type="text" th:field="*{age}" id="age"/>
+                    <div style="color:red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age Error</div>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="password">Create password: </label></td>
+                <td><input type="text" th:field="*{password}" id="password"/>
+                    <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="roles">Choose Roles: </label></td>
+                <td>
+                    <div th:each="role: ${listRoles}">
+                        <input type="checkbox" th:field="*{roles}" th:value="${role.id}" th:text="${role.name}" id="roles"/>
+                    </div>
+                </td>
+            </tr>
 
-            <div class="form-group row">
-                <label class="col-3 col-form-label text-left">Enter Surname: </label>
-                <div class="col-8">
-                    <input type="text" th:field="*{lastName}" class="form-control"
-                           required minlength="6" maxlength="10"/>
-                </div>
-            </div>
+        </table>
 
-            <div class="form-group row">
-                <label class="col-3 col-form-label text-left">Enter Password: </label>
-                <div class="col-8">
-                    <input type="text" th:field="*{password}" class="form-control"
-                           required minlength="2" maxlength="20"/>
-                </div>
-            </div>
+        <br>
 
-            <div class="form-group row">
-                <label class="col-3 col-form-label text-left">Enter age: </label>
-                <div class="col-8">
-                    <input type="text" th:field="*{age}" class="form-control"
-                           required minlength="2" maxlength="20"/>
-                </div>
-            </div>
+        <input type="submit" value="Update"/>
 
-            <div class="form-group row">
-                <label class="col-3 col-form-label text-left">Choose Roles: </label>
-                <div class="col-8">
-                    <th:block th:each="role: ${listRoles}">
-                        <input type="checkbox" th:field="*{roles}"
-                               th:text="${role.name}" th:value="${role.id}" class="m-2"/>
-                    </th:block>
-                </div>
-            </div>
-
-            <div>
-                <button type="submit" class="btn btn-primary">Update</button>
-            </div>
-        </div>
     </form>
-</div>
+
+    <br/>
+
+    <form th:action="@{/logout}" th:method="post">
+        <input type="submit" th:value="Logout"/>
+    </form>
+
+
+
+
+
+
+<!--    <div class="container m-3 text-center">-->
+<!--        <div class="text-right">-->
+<!--            <form th:action="@{/logout}" method="post" style="max-width: 600px; margin: 0 auto;">-->
+<!--                <input type="submit" th:value="Logout"/>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    <div>-->
+<!--        <h2>Edit User</h2>-->
+<!--    </div>-->
+
+<!--    <form th:action="@{/admin/{id}(id=${user.getId()})}" th:object="${user}"-->
+<!--          method="post" style="max-width: 600px; margin: 0 auto;">-->
+<!--        <input type="hidden" th:field="*{id}"/>-->
+<!--        <div class="m-3">-->
+<!--            <div class="form-group row">-->
+<!--                <label class="col-3 col-form-label text-left">Enter Name: </label>-->
+<!--                <div class="col-8">-->
+<!--                    <input type="text" th:field="*{username}" class="form-control" required/>-->
+<!--                </div>-->
+<!--                <div class="col-sm-3">-->
+<!--                    <small id="usernameHelp" class="text-danger">-->
+<!--                        Must be 2-50 characters long.-->
+<!--                    </small>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div class="form-group row">-->
+<!--                <label class="col-3 col-form-label text-left">Enter Surname: </label>-->
+<!--                <div class="col-8">-->
+<!--                    <input type="text" th:field="*{lastName}" class="form-control"-->
+<!--                           required minlength="6" maxlength="10"/>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div class="form-group row">-->
+<!--                <label class="col-3 col-form-label text-left">Enter Password: </label>-->
+<!--                <div class="col-8">-->
+<!--                    <input type="text" th:field="*{password}" class="form-control"-->
+<!--                           required minlength="2" maxlength="20"/>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div class="form-group row">-->
+<!--                <label class="col-3 col-form-label text-left">Enter age: </label>-->
+<!--                <div class="col-8">-->
+<!--                    <input type="text" th:field="*{age}" class="form-control"-->
+<!--                           required minlength="2" maxlength="20"/>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div class="form-group row">-->
+<!--                <label class="col-3 col-form-label text-left">Choose Roles: </label>-->
+<!--                <div class="col-8">-->
+<!--                    <th:block th:each="role: ${listRoles}">-->
+<!--                        <input type="checkbox" th:field="*{roles}"-->
+<!--                               th:text="${role.name}" th:value="${role.id}" class="m-2"/>-->
+<!--                    </th:block>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div>-->
+<!--                <button type="submit" class="btn btn-primary">Update</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </form>-->
+<!--</div>-->
 
 </body>
 </html>

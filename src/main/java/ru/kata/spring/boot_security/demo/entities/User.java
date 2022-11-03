@@ -1,6 +1,7 @@
 package ru.kata.spring.boot_security.demo.entities;
 
 
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
@@ -17,23 +18,24 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotNull(message = "Поля имени не должно быть пустым")
-    @Size(min = 2, max = 50, message = "Имя должно быть от 2 до 50 символов длиной")
-    @Column(nullable = false, unique = true, length = 50)
+    @NotNull(message = "Name fields should not be empty")
+    @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters long")
+    @Column(unique = true)
     private String username;
 
-    @NotNull(message = "Поле фамилии не должна быть пустым")
-    @Size(min = 2, max = 50, message = "Фамилия должно быть от 2 до 50 символов длиной")
-    @Column(name = "last_name", nullable = false, length = 50)
+    @NotNull(message = "Surname fields should not be empty")
+    @Size(min = 2, max = 50, message = "Surname must be between 2 and 50 characters long")
+    @Column(name = "last_name")
     private String lastName;
 
-    @Min(value = 0, message = "Возраст должен быть больше 0")
+    @Min(value = 0, message = "Age must be more than 0")
     private int age;
 
-    @Column(nullable = false, length = 64)
+    @Column
     private String password;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @NotNull(message = "Choose Role")
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -41,7 +43,6 @@ public class User {
     private Set<Role> roles = new HashSet<>();
 
     public User() {
-        System.out.println("create User");
     }
 
     public User(String username, String lastName, int age) {
