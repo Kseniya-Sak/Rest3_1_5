@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -24,11 +25,10 @@ public class Role implements GrantedAuthority {
     private String name;
 
     @ManyToMany( cascade = {
-            CascadeType.PERSIST,
+//            CascadeType.PERSIST,
             CascadeType.MERGE},
             mappedBy = "roles")
-    @JsonIgnore
-    private Set<User> users;
+    private Set<User> users = new HashSet<>();
 
     public Role() {
     }

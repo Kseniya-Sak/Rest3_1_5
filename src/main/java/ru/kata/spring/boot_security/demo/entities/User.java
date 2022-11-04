@@ -9,9 +9,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -40,25 +38,26 @@ public class User implements UserDetails {
     private String password;
 
     @NotNull(message = "Choose Role")
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+//    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(cascade = {CascadeType.MERGE})
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+    private List<Role> roles = new ArrayList<>();
 
     public User() {
     }
 
-    public User(String username, String lastName, int age) {
+    public User(String username, String lastName, int age, String password) {
         this.username = username;
         this.lastName = lastName;
         this.age = age;
+        this.password = password;
     }
 
-    public User(String username, String lastName, int age, String password, Set<Role> roles) {
-       this(username, lastName, age);
-        this.password = password;
+    public User(String username, String lastName, int age, String password, List<Role> roles) {
+       this(username, lastName, age, password);
         this.roles = roles;
     }
 
@@ -102,11 +101,11 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public Set<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 
