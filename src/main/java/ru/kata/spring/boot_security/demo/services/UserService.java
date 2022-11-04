@@ -41,8 +41,6 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
-
-
     @Transactional
     public void update(long id, User updatedUser) {
         updatedUser.setId(id);

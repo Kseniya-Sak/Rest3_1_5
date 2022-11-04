@@ -1,7 +1,5 @@
 package ru.kata.spring.boot_security.demo.entities;
 
-
-import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -38,7 +36,6 @@ public class User implements UserDetails {
     private String password;
 
     @NotNull(message = "Choose Role")
-//    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @ManyToMany(cascade = {CascadeType.MERGE})
     @JoinTable(
             name = "users_roles",

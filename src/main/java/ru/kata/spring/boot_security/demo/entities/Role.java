@@ -1,14 +1,11 @@
 package ru.kata.spring.boot_security.demo.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,8 +21,7 @@ public class Role implements GrantedAuthority {
     @Size(min = 2, max = 50, message = "Имя должно быть от 2 до 50 символов длиной")
     private String name;
 
-    @ManyToMany( cascade = {
-//            CascadeType.PERSIST,
+    @ManyToMany(cascade = {
             CascadeType.MERGE},
             mappedBy = "roles")
     private Set<User> users = new HashSet<>();
