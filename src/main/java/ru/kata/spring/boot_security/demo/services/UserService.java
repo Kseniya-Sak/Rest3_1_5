@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.entities.User;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -25,8 +26,8 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public Set<User> findAll() {
-        return userRepository.findAll().stream().collect(Collectors.toSet());
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 
     public User findOne(long id) {
@@ -46,6 +47,7 @@ public class UserService implements UserDetailsService {
     @Transactional
     public void update(long id, User updatedUser) {
         updatedUser.setId(id);
+        updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
         userRepository.save(updatedUser);
     }
 
