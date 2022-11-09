@@ -22,7 +22,6 @@ public class UserController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN') && hasRole('USER')")
     public String showUser(Principal principal, Model model) {
         model.addAttribute("user", userService.findByUsername(principal.getName()));
         return "user/userInfo";

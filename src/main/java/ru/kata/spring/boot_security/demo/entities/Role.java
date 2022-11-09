@@ -24,7 +24,7 @@ public class Role implements GrantedAuthority {
     @ManyToMany(cascade = {
             CascadeType.MERGE},
             mappedBy = "roles")
-    private Set<User> users = new HashSet<>();
+    private Set<User> users;
 
     public Role() {
     }
@@ -33,9 +33,9 @@ public class Role implements GrantedAuthority {
         this.name = name;
     }
 
-    public Role(String name, Set<User> users) {
+    public Role(long id, String name) {
+        this.id = id;
         this.name = name;
-        this.users = users;
     }
 
     public long getId() {
