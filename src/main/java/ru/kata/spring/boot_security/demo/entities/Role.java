@@ -4,9 +4,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -17,8 +14,6 @@ public class Role implements GrantedAuthority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotNull
-    @Size(min = 2, max = 50, message = "Имя должно быть от 2 до 50 символов длиной")
     private String name;
 
     @ManyToMany(cascade = {

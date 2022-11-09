@@ -6,7 +6,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -19,23 +18,16 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @NotNull(message = "Name fields should not be empty")
-    @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters long")
-    @Column(unique = true)
     private String username;
 
-    @NotNull(message = "Surname fields should not be empty")
-    @Size(min = 2, max = 50, message = "Surname must be between 2 and 50 characters long")
     @Column(name = "last_name")
     private String lastName;
 
-    @Min(value = 0, message = "Age must be more than 0")
     private int age;
 
     @Column
     private String password;
 
-    @NotNull(message = "Choose Role")
     @ManyToMany(cascade = {CascadeType.MERGE})
     @JoinTable(
             name = "users_roles",
