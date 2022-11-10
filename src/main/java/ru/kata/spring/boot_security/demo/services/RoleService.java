@@ -3,8 +3,9 @@ package ru.kata.spring.boot_security.demo.services;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.entities.Role;
+import ru.kata.spring.boot_security.demo.entities.User;
 import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
-;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -24,5 +25,15 @@ public class RoleService {
     public void save(Role role) {
         roleRepository.save(role);
     }
+
+    public Role getRole(String name) {
+        return roleRepository.findRoleByName(name);
+    }
+
+    public Set<String> getSetStringRolesFromUser (User user) {
+        return user.getRoles().stream().map(role -> role.getName()).collect(Collectors.toSet());
+    }
+
+
 
 }

@@ -1,8 +1,8 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.entities.Role;
 import ru.kata.spring.boot_security.demo.entities.User;
@@ -19,7 +19,7 @@ public class AdminController {
     private static final List<Role> listOfRoles;
 
     static {
-        listOfRoles = List.of(new Role(1l, "ROLE_ADMIN"), new Role(2l, "ROLE_USER"));
+        listOfRoles = List.of(new Role(1l, "ADMIN"), new Role(2l, "USER"));
     }
 
     public AdminController(UserService userService, RoleService roleService) {
@@ -28,37 +28,17 @@ public class AdminController {
     }
 
     @GetMapping
-    public String showAllUsers(Model model) {
-        model.addAttribute("users", userService.findAll());
+    public String showAllUsers(@AuthenticationPrincipal User user, Model model) {
+        model.addAttribute("user", user);
+        model.addAttribute("allUsers", userService.findAll());
+        model.addAttribute("listRoles", listOfRoles);
+        model.addAttribute("newUser", new User());
 
-        return "admin/users";
+        return "admin/adminPage";
     }
 
-    @GetMapping("/{id}/edit")
-    public String show(@PathVariable("id") long id, Model model) {
-        model.addAttribute("user", userService.findOne(id));
-        model.addAttribute("listRoles", roleService.getAllRoles());
-
-        return "admin/edit_form";
-    }
-
-    @GetMapping("/new")
-    public String newPerson(Model model) {
-        model.addAttribute("user", new User());
-        model.addAttribute("listRoles", roleService.getAllRoles());
-
-        return "admin/new";
-    }
-
-    @PostMapping
-    public String create(@ModelAttribute("user") User user, BindingResult bindingResult) {
-        userService.save(user);
-
-        return "redirect:/admin";
-    }
-
-    @PostMapping("/{id}")
-    public String update(@ModelAttribute("user") User user, BindingResult bindingResult,
+    @PatchMapping("/{id}")
+    public String update(@ModelAttribute("user") User user,
                          @PathVariable("id") long id) {
         userService.update(id, user);
 
@@ -68,6 +48,13 @@ public class AdminController {
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") long id) {
         userService.delete(id);
+        return "redirect:/admin";
+    }
+
+    @PostMapping
+    public String create(@ModelAttribute("user") User user) {
+        userService.save(user);
+
         return "redirect:/admin";
     }
 }

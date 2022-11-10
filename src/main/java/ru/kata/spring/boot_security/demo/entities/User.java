@@ -28,6 +28,8 @@ public class User implements UserDetails {
     @Column
     private String password;
 
+    private String email;
+
     @ManyToMany(cascade = {CascadeType.MERGE})
     @JoinTable(
             name = "users_roles",
@@ -48,6 +50,20 @@ public class User implements UserDetails {
     public User(String username, String lastName, int age, String password, Set<Role> roles) {
        this(username, lastName, age, password);
         this.roles = roles;
+    }
+
+    public User(String username, String lastName, int age, String password, String email, Set<Role> roles) {
+        this(username, lastName, age, password);
+        this.email = email;
+        this.roles = roles;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public long getId() {
@@ -99,13 +115,14 @@ public class User implements UserDetails {
     }
 
     public void addRole(Role role) {
+        if (roles == null) {
+            roles = new HashSet<>();
+        }
         roles.add(role);
-        role.getUsers().add(this);
     }
 
     public void removeRole(Role role) {
         this.roles.remove(role);
-        role.getUsers().remove(this);
     }
 
     @Override
@@ -137,6 +154,15 @@ public class User implements UserDetails {
 
 
     @Override
+    public int hashCode() {
+        int result = username != null ? username.hashCode() : 0;
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + age;
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        return result;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -149,14 +175,6 @@ public class User implements UserDetails {
     }
 
     @Override
-    public int hashCode() {
-        int result = username != null ? username.hashCode() : 0;
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
-        result = 31 * result + age;
-        return result;
-    }
-
-    @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
@@ -164,7 +182,12 @@ public class User implements UserDetails {
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
                 ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
                 ", roles=" + roles +
                 '}';
+    }
+
+    public String getRolesToString() {
+        return roles.stream().map(i -> i.toString()).collect(Collectors.joining(" "));
     }
 }
