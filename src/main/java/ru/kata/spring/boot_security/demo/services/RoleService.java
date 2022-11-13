@@ -1,39 +1,31 @@
 package ru.kata.spring.boot_security.demo.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.entities.Role;
-import ru.kata.spring.boot_security.demo.entities.User;
 import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
 
+import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class RoleService {
-    private final RoleRepository roleRepository;
+    @Autowired
+    private RoleRepository roleRepositories;
 
-    public RoleService(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
+    @Transactional
+    public Set<Role> findAll() {
+        return new HashSet<>(roleRepositories.findAll());
     }
 
-    public Set<Role> getAllRoles() {
-        return roleRepository.findAll().stream().collect(Collectors.toSet());
+    @Transactional
+    public Set<Role> getSetRoles(Set<String> roles) {
+        return roleRepositories.getSetRoles(roles);
     }
 
     @Transactional
     public void save(Role role) {
-        roleRepository.save(role);
+        roleRepositories.save(role);
     }
-
-    public Role getRole(String name) {
-        return roleRepository.findRoleByName(name);
-    }
-
-    public Set<String> getSetStringRolesFromUser (User user) {
-        return user.getRoles().stream().map(role -> role.getName()).collect(Collectors.toSet());
-    }
-
-
-
 }

@@ -2,48 +2,44 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <title>Login page</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <title>Login page</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-          integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
 </head>
 
 <body>
 <div class="container-fluid mt-5">
-    <div class="row">
-        <div class="col-4 offset-4">
-            <div class="row">
-                <div class="col-md-8 offset-2">
-                    <p class="h3 font-weight-bold">Please sign in</p>
+  <div class="row">
+    <div class="col-4 offset-4">
+      <div class="row">
+        <div class="col-md-8 offset-2">
+          <p class="h3 font-weight-bold">Please sign in</p>
 
-                    <form method="POST" action="/login">
-                        <div class="form-group">
+          <form method="POST" action="/login">
+            <div class="form-group">
 
-                            <label class="sr-only" for="Email address">Email</label>
-                            <input class="form-control" type="text" placeholder="Email address"
-                                   name="email" id="Email address">
-                            <label class="sr-only" for="password">Username</label>
-                            <input class="form-control" type="password"  placeholder="Password"
-                                   name="password" id="password">
-                            <button type="submit" class="btn btn-primary btn-md btn-block mt-2">Sign in</button>
-
-                        </div>
-                    </form>
-                </div>
+              <label class="sr-only" for="username">Email</label>
+              <input class="form-control" type="text" placeholder="Email address"
+                     name="username" id="username">
+              <label class="sr-only" for="password">Username</label>
+              <input class="form-control" type="password"  placeholder="Password"
+                     name="password" id="password">
+              <button type="submit" class="btn btn-primary btn-md btn-block mt-2">Sign in</button>
             </div>
+          </form>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
-
-<!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
